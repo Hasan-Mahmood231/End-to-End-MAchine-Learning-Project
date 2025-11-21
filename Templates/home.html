@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>House Price Prediction</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f4f6f9;
+            padding-top: 50px;
+        }
+        .container {
+            max-width: 700px;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 15px rgba(0,0,0,0.2);
+        }
+        h2 {
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        .form-text {
+            font-size: 0.85em;
+            color: #6c757d;
+        }
+        .btn-primary {
+            width: 100%;
+        }
+        .prediction {
+            margin-top: 20px;
+            font-size: 1.2em;
+            font-weight: bold;
+            text-align: center;
+            color: green;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>House Price Prediction</h2>
+        <form action="{{ url_for('predict') }}" method="post">
+            <div class="mb-3">
+                <label for="CRIM" class="form-label">CRIM (per capita crime rate)</label>
+                <input type="number" step="any" class="form-control" name="CRIM" placeholder="e.g., 0.1" required>
+                <div class="form-text">Higher value → more crime in area.</div>
+            </div>
+            <div class="mb-3">
+                <label for="ZN" class="form-label">ZN (Residential land zoned)</label>
+                <input type="number" step="any" class="form-control" name="ZN" placeholder="e.g., 18" required>
+                <div class="form-text">Percentage of residential land for large lots (0–100%).</div>
+            </div>
+            <div class="mb-3">
+                <label for="INDUS" class="form-label">INDUS (Proportion of non-retail business acres)</label>
+                <input type="number" step="any" class="form-control" name="INDUS" placeholder="e.g., 2.3" required>
+                <div class="form-text">Higher → more industrial area, lower residential.</div>
+            </div>
+            <div class="mb-3">
+                <label for="CHAS" class="form-label">CHAS (Charles River dummy variable)</label>
+                <input type="number" step="1" class="form-control" name="CHAS" placeholder="0 or 1" required>
+                <div class="form-text">1 if tract bounds river, 0 otherwise.</div>
+            </div>
+            <div class="mb-3">
+                <label for="NOX" class="form-label">NOX (Nitric oxides concentration)</label>
+                <input type="number" step="any" class="form-control" name="NOX" placeholder="e.g., 0.5" required>
+                <div class="form-text">Higher → more air pollution.</div>
+            </div>
+            <div class="mb-3">
+                <label for="RM" class="form-label">RM (Average rooms per dwelling)</label>
+                <input type="number" step="any" class="form-control" name="RM" placeholder="e.g., 6.2" required>
+                <div class="form-text">Higher → larger houses.</div>
+            </div>
+            <div class="mb-3">
+                <label for="AGE" class="form-label">AGE (Proportion of old buildings)</label>
+                <input type="number" step="any" class="form-control" name="AGE" placeholder="e.g., 45" required>
+                <div class="form-text">Higher → more old houses.</div>
+            </div>
+            <div class="mb-3">
+                <label for="DIS" class="form-label">DIS (Weighted distance to employment centers)</label>
+                <input type="number" step="any" class="form-control" name="DIS" placeholder="e.g., 5.0" required>
+                <div class="form-text">Higher → farther from jobs.</div>
+            </div>
+            <div class="mb-3">
+                <label for="RAD" class="form-label">RAD (Accessibility to highways)</label>
+                <input type="number" step="any" class="form-control" name="RAD" placeholder="e.g., 4" required>
+                <div class="form-text">Higher → better highway access.</div>
+            </div>
+            <div class="mb-3">
+                <label for="TAX" class="form-label">TAX (Property-tax rate per $10k)</label>
+                <input type="number" step="any" class="form-control" name="TAX" placeholder="e.g., 300" required>
+                <div class="form-text">Higher → more expensive tax.</div>
+            </div>
+            <div class="mb-3">
+                <label for="PTRATIO" class="form-label">PTRATIO (Pupil-teacher ratio)</label>
+                <input type="number" step="any" class="form-control" name="PTRATIO" placeholder="e.g., 18.5" required>
+                <div class="form-text">Lower → better schools.</div>
+            </div>
+            <div class="mb-3">
+                <label for="B" class="form-label">B (Proportion of blacks by town)</label>
+                <input type="number" step="any" class="form-control" name="B" placeholder="e.g., 390" required>
+                <div class="form-text">Higher → higher proportion of black population.</div>
+            </div>
+            <div class="mb-3">
+                <label for="LSTAT" class="form-label">LSTAT (Lower status population %)</label>
+                <input type="number" step="any" class="form-control" name="LSTAT" placeholder="e.g., 12.5" required>
+                <div class="form-text">Higher → more lower-income people.</div>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Predict</button>
+        </form>
+
+        {% if prediction_text %}
+        <div class="prediction">
+            {{ prediction_text }}
+        </div>
+        {% endif %}
+    </div>
+</body>
+</html>
